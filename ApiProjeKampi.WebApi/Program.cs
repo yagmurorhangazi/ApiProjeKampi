@@ -1,3 +1,9 @@
+using ApiProjeKampi.WebApi.Context;
+using ApiProjeKampi.WebApi.Entities;
+using ApiProjeKampi.WebApi.ValidationRules;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ApiProjeKampi.WebApi
 {
@@ -7,19 +13,29 @@ namespace ApiProjeKampi.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddDbContext<Context.ApiContext>();
-
-
+            // 1. Controller Servisi (API'nin çalýþmasý için þart)
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            // 2. Veritabaný Context Kaydý (Sadece 1 kere olmasý yeterli)
+            builder.Services.AddDbContext<ApiContext>();
+
+            // 3. FluentValidation Kaydý
+            // Tek tek AddScoped yazmak yerine, bu satýr projedeki TÜM Validator sýnýflarýný otomatik bulur ve kaydeder.
+            builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
+
+            // 4. AutoMapper Kaydý (Sadece 1 kere olmasý yeterli)
+            builder.Services.AddAutoMapper(config =>
+            {
+                config.AddMaps(typeof(Program).Assembly);
+            });
+
+            // Swagger/OpenAPI Ayarlarý
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // HTTP Request Pipeline Yapýlandýrmasý
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -29,7 +45,6 @@ namespace ApiProjeKampi.WebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
