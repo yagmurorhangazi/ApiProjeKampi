@@ -1,6 +1,6 @@
-﻿namespace ApiProjeKampi.WebApi.Entities
+﻿namespace ApiProjeKampi.WebApi.Dtos.ContactDtos
 {
-    public class Contact
+    public class ResultContactDto
     {
         public int ContactId { get; set; }
         public string MapLocation { get; set; }
@@ -10,3 +10,4 @@
         public string OpenHours { get; set; }
     }
 }
+
