@@ -9,6 +9,9 @@ namespace ApiProjeKampi.WebApi
 
             // Add services to the container.
 
+            builder.Services.AddDbContext<Context.ApiContext>();
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
