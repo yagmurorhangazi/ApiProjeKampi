@@ -9,6 +9,9 @@ namespace ApiProjeKampi.WebUI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
+            builder.Services.AddHttpClient();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -21,11 +21,12 @@ namespace ApiProjeKampi.WebApi.Context
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Services> Services{ get; set; }
         public DbSet<Testimonial> Testimonials{ get; set; }
+        public DbSet<YummyEvent> YummyEvents { get; set; }
 
-        
 
-      
 
-    
+
+
+
     }
 }

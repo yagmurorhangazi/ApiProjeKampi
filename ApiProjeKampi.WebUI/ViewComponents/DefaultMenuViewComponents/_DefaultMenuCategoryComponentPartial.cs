@@ -1,13 +1,15 @@
-﻿using ApiProjeKampi.WebUI.Dtos.ServiceDtos;
+﻿using ApiProjeKampi.WebUI.Dtos.CategoryDtos;
+using ApiProjeKampi.WebUI.Dtos.ServiceDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace ApiProjeKampi.WebUI.ViewComponents
+namespace ApiProjeKampi.WebUI.ViewComponents.DefaultMenuViewComponents
 {
-    public class _ServiceDefaultComponentPartial : ViewComponent
+    public class _DefaultMenuCategoryComponentPartial : ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public _ServiceDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+
+        public _DefaultMenuCategoryComponentPartial(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -18,19 +20,19 @@ namespace ApiProjeKampi.WebUI.ViewComponents
             try
             {
                 // Portu şu an Swagger'da çalışan kesin numara olan 7119 yaptık!
-                var responseMessage = await client.GetAsync("https://localhost:7119/api/Services");
+                var responseMessage = await client.GetAsync("https://localhost:7119/api/Categories");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                    var values = JsonConvert.DeserializeObject<List<ResultServiceDto>>(jsonData);
+                    var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
                     return View(values);
                 }
             }
             catch (Exception)
             {
-                return View(new List<ResultServiceDto>());
+                return View(new List<ResultCategoryDto>());
             }
-            return View(new List<ResultServiceDto>());
+            return View(new List<ResultCategoryDto>());
         }
     }
 }
